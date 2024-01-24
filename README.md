@@ -1,7 +1,13 @@
 # Project Overview
 
-Welcome to my text detection and recognition project! My primary goal is to develop a robust system capable of detecting and recognizing text in natural scene images. The process involves two key phases: text region detection and subsequent recognition using specialized models.
+Welcome to my text detection and recognition project! My primary goal is to develop a robust system capable of detecting and recognizing text in natural scene images. The process involves two key phases: text region detection and subsequent recognition using specialized models. <br>
+<br>
 A demo website coming soon!! meanwhile a video
+
+
+https://github.com/nirkoren1/Text_Detection/assets/72827063/2d644a37-de0f-4dfc-b07e-2c3026000329
+
+
 
 ## Models Structure
 
