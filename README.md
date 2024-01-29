@@ -30,15 +30,15 @@ For training my recognition model, I employed a diverse dataset comprising 16,00
 I delve into refining existing text detection models such as EAST and CRAFT. My exploration includes experimenting with various backbone architectures and loss functions. I tackle challenges like overlapping text, complex backgrounds, and varying text orientations.
 
 ### Papers Referenced:
-- [Efficient and Accurate Arbitrary-Shaped Text Detection with Pixel Aggregation Network](https://arxiv.org/pdf/1904.01941v1.pdf)
-- [A Comprehensive Review on Text Detection and Recognition: Progress and Challenges](https://arxiv.org/pdf/2208.12419.pdf)
+- [Character Region Awareness for Text Detection](https://arxiv.org/pdf/1904.01941v1.pdf)
+- [Arbitrary Shape Text Detection via Segmentation with Probability Maps](https://arxiv.org/pdf/2208.12419.pdf)
 
 ## Text Recognition Information:
 
 The text recognition aspect focuses on training a model using the Vision Transformer architecture. I prioritize the ability to handle diverse text fonts and sizes, emphasizing proficiency in the English language.
 
 ### Papers Referenced:
-- [Training Vision-Transformer-Based Text Recognition Models for Various Tasks](https://arxiv.org/pdf/2206.00311v3.pdf)
-- [Towards Accurate Scene Text Recognition with Semantic Reasoning Networks](https://arxiv.org/pdf/2109.10282v5.pdf)
+- [MaskOCR: Text Recognition with Masked Encoder-Decoder Pretraining](https://arxiv.org/pdf/2206.00311v3.pdf)
+- [TrOCR: Transformer-based Optical Character Recognition with Pre-trained Models](https://arxiv.org/pdf/2109.10282v5.pdf)
 
 
