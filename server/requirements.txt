@@ -1,0 +1,10 @@
+torch==1.10.0+cpu -f https://download.pytorch.org/whl/torch_stable.html
+torchvision==0.11.1+cpu -f https://download.pytorch.org/whl/torch_stable.html
+numpy
+matplotlib
+opencv-python
+ipython
+scipy
+flask
+flask-cors
+pillow

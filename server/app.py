@@ -1,11 +1,10 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from server import from_jpg_toTensor, get_bbs, get_text_bb
+from server import get_bbs, get_text_bb
 from PIL import Image
 import numpy as np
 import base64
 from io import BytesIO
-import requests
 import torch
 import json
 import cv2
