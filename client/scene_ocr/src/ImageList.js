@@ -6,7 +6,7 @@ import { Button } from '@mui/material';
 export default function StandardImageList(props) {
   return (
     <div style={{ display: 'flex', justifyContent: 'center', overflowX: 'auto', width: '100%' }}>
-      <ImageList sx={{ width: '60%', height: 180 }} cols={itemData.length} rowHeight={164}>
+      <ImageList sx={{ width: '60%', height: 181 }} cols={itemData.length} rowHeight={164}>
         {itemData.map((item, index) => (
             // <button key={index} style={{padding: 0, border: 0}}>
             <img
@@ -56,5 +56,21 @@ const itemData = [
   {
     img: 'cheese.jpg',
     title: 'cheese',
+  },
+  {
+    img: 'books_covers.png',
+    title: 'books_covers',
+  },
+  {
+    img: 'document.jpg',
+    title: 'document',
+  },
+  {
+    img: 'somthing.jpg',
+    title: 'somthing',
+  },
+  {
+    img: 'code.jpg',
+    title: 'code',
   },
 ];

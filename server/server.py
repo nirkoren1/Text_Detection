@@ -190,11 +190,55 @@ class Model(nn.Module):
 
 detection_model = Model()
 detection_model = nn.DataParallel(detection_model, device_ids=[0])
-checkpoint = torch.load('./saved_model (13).pth', map_location=torch.device('cpu'))
+checkpoint = torch.load('D:\Done_Projects\Text_Detection\models_weights\saved_model (13).pth', map_location=torch.device('cpu'))
 detection_model.load_state_dict(checkpoint)
 for parameter in detection_model.parameters():
     parameter.requires_grad = False
 detection_model.to(device)
+
+
+def get_smaller_parts(seg, bb, t):
+    y1, y2, x1, x2 = bb
+    d_b = abs(y1 - y2) * abs(x1 - x2)
+    bb_out = [bb]
+    
+    if d_b < 50:
+        return bb_out
+    
+    croped = seg[y1:y2, x1:x2]
+    # d_b = np.sum(croped)
+    max_parts = 1
+    while t < 1:
+        t += 0.01
+        binary_mask = croped > t
+        # size = np.sum(croped[binary_mask])
+        labeled_mask, num_labels = ndimage.label(binary_mask)
+        if num_labels <= max_parts:
+            continue
+        bounding_boxes_ = ndimage.find_objects(labeled_mask)
+        current_bbs = []
+        for label, bbox in enumerate(bounding_boxes_):
+            if bbox is not None:
+                y1_, y2_, x1_, x2_ = bbox[0].start, bbox[0].stop, bbox[1].start, bbox[1].stop
+                current_bbs.append((y1_ + y1, y2_ + y1, x1_ + x1, x2_ + x1))
+                
+        left_up_point = (current_bbs[0][0], current_bbs[0][2])
+        d_l = abs(left_up_point[0] - y1) + abs(left_up_point[1] - x1)
+        right_down_point = (current_bbs[0][1], current_bbs[0][3])
+        d_r = abs(right_down_point[0] - y2) + abs(right_down_point[1] - x2)
+        size = 0
+        for s_bb in current_bbs:
+            y1_s, y2_s, x1_s, x2_s = s_bb
+            # size += np.sum(seg[y1_s:y2_s, x1_s:x2_s])
+            size += (y2_s - y1_s) * (x2_s - x1_s)
+                
+        if size/d_b > 0.5:
+            bb_out = current_bbs
+            max_parts = num_labels
+        else:
+            break
+        
+    return bb_out
 
 
 def from_Tensor2BB(segmentation_maps, ratios, threshold=0.5):
@@ -214,7 +258,13 @@ def from_Tensor2BB(segmentation_maps, ratios, threshold=0.5):
         for label, bbox in enumerate(bounding_boxes, start=1):
             if bbox is not None:
                 y1, y2, x1, x2 = bbox[0].start, bbox[0].stop, bbox[1].start, bbox[1].stop
-                bbs.append((0, int(x1*2/ratios[i]), int(y1*2/ratios[i]), int(x2*2/ratios[i]), int(y2*2/ratios[i])))
+
+                parts = get_smaller_parts(current_seg, (y1, y2, x1, x2), threshold)
+                for part in parts:
+                    y1, y2, x1, x2 = part
+                    bbs.append((0, int(x1*2/ratios[i]), int(y1*2/ratios[i]), int(x2*2/ratios[i]), int(y2*2/ratios[i])))
+                    
+#                 bbs.append((0, int(x1*2/ratios[i]), int(y1*2/ratios[i]), int(x2*2/ratios[i]), int(y2*2/ratios[i])))
         batches.append(bbs)
 
     return batches
@@ -472,7 +522,7 @@ vocab = ['!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '
 
 recognition_model = TrOcr()
 recognition_model = nn.DataParallel(recognition_model, device_ids=[0])
-checkpoint = torch.load('./saved_model (9).pth', map_location=torch.device('cpu'))
+checkpoint = torch.load('D:\Done_Projects\Text_Detection\models_weights\saved_model (9).pth', map_location=torch.device('cpu'))
 recognition_model.load_state_dict(checkpoint)
 for parameter in recognition_model.parameters():
     parameter.requires_grad = False
@@ -575,7 +625,7 @@ def get_bbs(raw_images):
     with torch.autocast('cuda'):
         predictions = detection_model.forward(test_features)
 
-    predictions_bb = from_Tensor2BB(predictions.detach().cpu().numpy(), ratios, 0.85)
+    predictions_bb = from_Tensor2BB(predictions.detach().cpu().numpy(), ratios, 0.7)
     # min_shape = min(raw_images[0].shape[1], raw_images[0].shape[2])
     max_shape = max(raw_images[0].shape[1], raw_images[0].shape[2])
     predictions = resize_img(predictions, max_shape)
