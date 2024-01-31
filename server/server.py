@@ -230,7 +230,6 @@ def get_smaller_parts(seg, bb, t):
 
         size = np.sum(croped[binary_mask])
                 
-        print(size/d_b)
         if size/d_b > 0.5:
             bb_out = current_bbs
             # d_b = size
