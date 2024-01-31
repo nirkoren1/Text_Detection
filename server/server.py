@@ -205,16 +205,21 @@ def get_smaller_parts(seg, bb, t):
     if d_b < 50:
         return bb_out
     
-    croped = seg[y1:y2, x1:x2]
-    # d_b = np.sum(croped)
+    croped = seg[y1:y2, x1:x2].copy()
+    detected = croped[croped > t]
+    # croped = (croped - croped.min())/(croped.max() - croped.min())
+    d_b = np.sum(detected)
     max_parts = 1
     while t < 1:
         t += 0.01
         binary_mask = croped > t
-        # size = np.sum(croped[binary_mask])
+        
         labeled_mask, num_labels = ndimage.label(binary_mask)
+        if max_parts == 1:
+            d_b = np.sum(croped[binary_mask])
         if num_labels <= max_parts:
             continue
+        max_parts = max(max_parts, num_labels)
         bounding_boxes_ = ndimage.find_objects(labeled_mask)
         current_bbs = []
         for label, bbox in enumerate(bounding_boxes_):
@@ -222,19 +227,14 @@ def get_smaller_parts(seg, bb, t):
                 y1_, y2_, x1_, x2_ = bbox[0].start, bbox[0].stop, bbox[1].start, bbox[1].stop
                 current_bbs.append((y1_ + y1, y2_ + y1, x1_ + x1, x2_ + x1))
                 
-        left_up_point = (current_bbs[0][0], current_bbs[0][2])
-        d_l = abs(left_up_point[0] - y1) + abs(left_up_point[1] - x1)
-        right_down_point = (current_bbs[0][1], current_bbs[0][3])
-        d_r = abs(right_down_point[0] - y2) + abs(right_down_point[1] - x2)
-        size = 0
-        for s_bb in current_bbs:
-            y1_s, y2_s, x1_s, x2_s = s_bb
-            # size += np.sum(seg[y1_s:y2_s, x1_s:x2_s])
-            size += (y2_s - y1_s) * (x2_s - x1_s)
+
+        size = np.sum(croped[binary_mask])
                 
+        print(size/d_b)
         if size/d_b > 0.5:
             bb_out = current_bbs
-            max_parts = num_labels
+            # d_b = size
+            # max_parts = num_labels
         else:
             break
         
