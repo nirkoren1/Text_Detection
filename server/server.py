@@ -13,6 +13,7 @@ from torchvision.io import read_image
 import torchvision
 from scipy import ndimage
 from torchvision.transforms import v2
+import config
 
 new_size = 448
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -190,7 +191,7 @@ class Model(nn.Module):
 
 detection_model = Model()
 detection_model = nn.DataParallel(detection_model, device_ids=[0])
-checkpoint = torch.load('D:\Done_Projects\Text_Detection\models_weights\saved_model (13).pth', map_location=torch.device('cpu'))
+checkpoint = torch.load(config.detection_model_path, map_location=torch.device('cpu'))
 detection_model.load_state_dict(checkpoint)
 for parameter in detection_model.parameters():
     parameter.requires_grad = False
@@ -521,7 +522,7 @@ vocab = ['!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '
 
 recognition_model = TrOcr()
 recognition_model = nn.DataParallel(recognition_model, device_ids=[0])
-checkpoint = torch.load('D:\Done_Projects\Text_Detection\models_weights\saved_model (9).pth', map_location=torch.device('cpu'))
+checkpoint = torch.load(config.recognition_model_path, map_location=torch.device('cpu'))
 recognition_model.load_state_dict(checkpoint)
 for parameter in recognition_model.parameters():
     parameter.requires_grad = False
