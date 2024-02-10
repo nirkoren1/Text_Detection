@@ -176,7 +176,7 @@ const showImageButton = <Button size="small" color="primary" onClick={changeToIm
 
 
   async function sendData(formData) {
-    const response = await fetch('http://localhost:5000/api', {
+    const response = await fetch('http://128.140.113.187/:5000/api', {
       method: 'POST', 
       headers: {
           'Content-Type': 'application/json'
