@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/Text_Detection/static/css/main.a63a7212.chunk.css",
-    "main.js": "/Text_Detection/static/js/main.8b7e698d.chunk.js",
-    "main.js.map": "/Text_Detection/static/js/main.8b7e698d.chunk.js.map",
+    "main.js": "/Text_Detection/static/js/main.b5e1b97f.chunk.js",
+    "main.js.map": "/Text_Detection/static/js/main.b5e1b97f.chunk.js.map",
     "runtime~main.js": "/Text_Detection/static/js/runtime~main.24f9ba53.js",
     "runtime~main.js.map": "/Text_Detection/static/js/runtime~main.24f9ba53.js.map",
     "static/js/2.806183ce.chunk.js": "/Text_Detection/static/js/2.806183ce.chunk.js",
@@ -10,7 +10,7 @@
     "static/js/3.e91cd1ee.chunk.js": "/Text_Detection/static/js/3.e91cd1ee.chunk.js",
     "static/js/3.e91cd1ee.chunk.js.map": "/Text_Detection/static/js/3.e91cd1ee.chunk.js.map",
     "index.html": "/Text_Detection/index.html",
-    "precache-manifest.c93f34624444589c795f9217ee22e9a3.js": "/Text_Detection/precache-manifest.c93f34624444589c795f9217ee22e9a3.js",
+    "precache-manifest.7db5bf6f74be4b740e05200c8a133b5c.js": "/Text_Detection/precache-manifest.7db5bf6f74be4b740e05200c8a133b5c.js",
     "service-worker.js": "/Text_Detection/service-worker.js",
     "static/css/main.a63a7212.chunk.css.map": "/Text_Detection/static/css/main.a63a7212.chunk.css.map"
   }
